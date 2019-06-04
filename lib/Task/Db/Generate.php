@@ -117,16 +117,16 @@ class Task_Db_Generate extends Ruckusing_Task_Base implements Ruckusing_Task_Int
 
         //write it out!
         $full_path = $migrations_dir . DIRECTORY_SEPARATOR . $file_name;
-        $template_str = self::get_template($class);
+        $template_str = static::get_template($class);
         $file_result = file_put_contents($full_path, $template_str);
         if ($file_result === FALSE) {
             throw new Ruckusing_Exception(
                     "Error writing to migrations directory/file. Do you have sufficient privileges?",
                     Ruckusing_Exception::INVALID_MIGRATION_DIR
             );
-        } else {
-            $output .= "\n\tCreated migration: {$file_name}\n\n";
         }
+
+        $output .= "\n\tCreated migration: {$file_name}\n\n";
 
         return $output;
     }
@@ -158,7 +158,7 @@ class Task_Db_Generate extends Ruckusing_Task_Base implements Ruckusing_Task_Int
      * Indicate if a class name is already used
      *
      * @param string $classname      The class name to test
-     * @param string $migrationsDirs The array with directories of migration files (in simplest case - just array with one element)
+     * @param array $migrationsDirs The array with directories of migration files (in simplest case - just array with one element)
      *
      * @return bool
      */
