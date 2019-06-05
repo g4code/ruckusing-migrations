@@ -1,14 +1,15 @@
 {
+    "name": "g4/ruckusing-migrations",
     "authors": [
         {
             "email": "codycaughlan@gmail.com",
-            "homepage": "https://github.com/ruckus/ruckusing-migrations/wiki",
+            "homepage": "https://github.com/g4code/ruckusing-migrations",
             "name": "Cody Caughlan",
             "role": "Project lead / Developer"
         }
     ],
     "autoload": {
-        "psr-0": {
+      "psr-0": {
             "Ruckusing": "lib/",
             "Task": "lib/"
         }
@@ -17,7 +18,7 @@
         "ruckus.php"
     ],
     "description": "Framework for generating and managing database migrations",
-    "homepage": "https://github.com/ruckus/ruckusing-migrations",
+    "homepage": "https://github.com/g4code/ruckusing-migrations",
     "keywords": [
         "ruckusing",
         "rake",
@@ -28,7 +29,6 @@
         "task"
     ],
     "license": "MIT",
-    "name": "ruckusing/ruckusing-migrations",
     "require": {
         "php": ">=5.2.0"
     },
@@ -37,8 +37,8 @@
     },
     "support": {
         "email": "codycaughlan@gmail.com",
-        "issues": "https://github.com/ruckus/ruckusing-migrations/issues",
-        "source": "https://github.com/ruckus/ruckusing-migrations"
+        "issues": "https://github.com/g4code/ruckusing-migrations/issues",
+        "source": "https://github.com/g4code/ruckusing-migrations"
     },
     "type": "library"
 }
