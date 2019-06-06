@@ -117,7 +117,7 @@ class Task_Db_Generate extends Ruckusing_Task_Base implements Ruckusing_Task_Int
 
         //write it out!
         $full_path = $migrations_dir . DIRECTORY_SEPARATOR . $file_name;
-        $template_str = static::get_template($class);
+        $template_str = $this->get_template($class);
         $file_result = file_put_contents($full_path, $template_str);
         if ($file_result === FALSE) {
             throw new Ruckusing_Exception(
@@ -174,7 +174,7 @@ class Task_Db_Generate extends Ruckusing_Task_Base implements Ruckusing_Task_Int
 
         return false;
     }
-    
+
     /**
      * Indicate if a class name is correct or not.
      *
@@ -196,7 +196,7 @@ class Task_Db_Generate extends Ruckusing_Task_Base implements Ruckusing_Task_Int
      * @param  string $klass class name to create
      * @return string
      */
-    public static function get_template($klass)
+    protected function get_template($klass)
     {
         $template = <<<TPL
 <?php
