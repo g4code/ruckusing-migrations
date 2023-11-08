@@ -126,6 +126,7 @@ class Ruckusing_Adapter_MySQL_Base extends Ruckusing_Adapter_Base implements Ruc
                 'enum'          => array('name' => "enum", 'values' => array()),
                 'uuid'          => array('name' => "char", 'limit' => 36),
                 'char'          => array('name' => "char"),
+                'json'          => array('name' => "json"),
         );
 
         return $types;
@@ -664,7 +665,7 @@ class Ruckusing_Adapter_MySQL_Base extends Ruckusing_Adapter_Base implements Ruc
                 $this->identifier($table_name),
                 $this->identifier($column_name),
                 $this->identifier($new_column_name), $current_type);
-        
+
         $sql .= $this->add_column_options($current_type, $column_info);
 
         return $this->execute_ddl($sql);
@@ -851,7 +852,7 @@ class Ruckusing_Adapter_MySQL_Base extends Ruckusing_Adapter_Base implements Ruc
 
         return $this->execute_ddl($sql);
     }
-    
+
     /**
      * Add timestamps
      *
@@ -886,7 +887,7 @@ class Ruckusing_Adapter_MySQL_Base extends Ruckusing_Adapter_Base implements Ruc
 
         return $created_at && $updated_at;
     }
-    
+
     /**
      * Remove timestamps
      *
@@ -1256,7 +1257,28 @@ class Ruckusing_Adapter_MySQL_Base extends Ruckusing_Adapter_Base implements Ruc
             if (empty($db_info['charset'])) {
                 $db_info['charset'] = "utf8";
             }
-            $this->conn = new mysqli($db_info['host'], $db_info['user'], $db_info['password'], '', $db_info['port'], $db_info['socket']); //db name leaved for selection
+            if (!empty($db_info['ssl_enabled']) && $db_info['ssl_enabled'] === true) {
+                $this->conn = mysqli_init();
+                if (empty($db_info['ssl_key'])) {
+                    $db_info['ssl_key'] = null;
+                }
+                if (empty($db_info['ssl_certificate'])) {
+                    $db_info['ssl_certificate'] = null;
+                }
+                if (empty($db_info['ssl_ca_certificate'])) {
+                    $db_info['ssl_ca_certificate'] = null;
+                }
+                if (empty($db_info['ssl_ca_path'])) {
+                    $db_info['ssl_ca_path'] = null;
+                }
+                if (empty($db_info['ssl_cipher_algos'])) {
+                    $db_info['ssl_cipher_algos'] = null;
+                }
+                $this->conn->ssl_set($db_info['ssl_key'], $db_info['ssl_certificate'], $db_info['ssl_ca_certificate'], $db_info['ssl_ca_path'], $db_info['ssl_cipher_algos']);
+                $this->conn->real_connect($db_info['host'], $db_info['user'], $db_info['password'], '', $db_info['port'], $db_info['socket']);
+            } else {
+                $this->conn = new mysqli($db_info['host'], $db_info['user'], $db_info['password'], '', $db_info['port'], $db_info['socket']); //db name leaved for selection
+            }
             if ($this->conn->connect_error) {
                 throw new Ruckusing_Exception(
                         "\n\nCould not connect to the DB, check host / user / password\n\n",
