@@ -59,6 +59,10 @@ class Ruckusing_Adapter_MySQL_Base extends Ruckusing_Adapter_Base implements Ruc
      */
     private $_in_trx = false;
 
+    private $db_info;
+
+    private $conn;
+
     /**
      * Creates an instance of Ruckusing_Adapter_MySQL_Base
      *
